@@ -1,8 +1,16 @@
 import TelegramBot, { InlineKeyboardMarkup, Message, CallbackQuery } from "node-telegram-bot-api";
 import fs from "fs";
 
-const TOKEN = "8040472221:AAFul9EXx3oVtKs93rXEW5z-XS7mX3kP8Qo";
-const ADMIN_ID = 896317857; // Замените на ваш реальный Telegram ID (можно узнать у @userinfobot)
+const TOKEN = process.env.BOT_TOKEN;
+const ADMIN_ID = Number(process.env.ADMIN_ID);
+
+if (!TOKEN) {
+  throw new Error("BOT_TOKEN is not set");
+}
+
+if (Number.isNaN(ADMIN_ID)) {
+  console.warn("ADMIN_ID is not set or invalid. Admin commands will be disabled.");
+}
 
 const bot = new TelegramBot(TOKEN, { polling: true });
 
